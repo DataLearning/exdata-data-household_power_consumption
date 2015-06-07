@@ -1,0 +1,10 @@
+data = read.table("household_power_consumption.txt", header = TRUE, sep=";", na.strings="?", stringsAsFactors=FALSE)
+library(stringr)
+data$Day = as.Date(data$Date, format="%d/%m/%Y")
+data2 = subset(data, Day == "2007-02-1" | Day =="2007-02-02")
+data2$DayTime = strptime(paste(data2$Date, data2$Time), "%d/%m/%Y %H:%M:%S")
+
+png("plot2.png", width = 480, height = 480, units = "px")
+par(mfrow = c(1,1))
+plot(data2$DayTime, data2$Global_active_power, type="l", xlab="", ylab = "Global Active Power (kilowatts)")
+dev.off()
